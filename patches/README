@@ -1,0 +1,5 @@
+This is patch directory
+
+cd WORKING_DIR
+sh hardware/lenovo/aio_row/patches/install.sh
+sh hardware/lenovo/aio_row/patches/uninstall.sh
