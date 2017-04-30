@@ -1,5 +1,3 @@
-    Revert "Revert "Temporary apply LIBC version to __pthread_gettid""
-
 diff --git a/libc/bionic/ndk_cruft.cpp b/libc/bionic/ndk_cruft.cpp
 index 3ac88f8..602adb4 100644
 --- a/libc/bionic/ndk_cruft.cpp
