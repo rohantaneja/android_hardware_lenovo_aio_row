@@ -13,7 +13,7 @@
 #include <cutils/log.h>
 
 #include <ui/GraphicBuffer.h>
-#include <IDumpTunnel.h>
+#include "IDumpTunnel.h"
 
 #include "IGuiExtService.h"
 

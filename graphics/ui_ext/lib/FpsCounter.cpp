@@ -10,7 +10,7 @@
 
 #include <cutils/properties.h>
 
-#include <FpsCounter.h>
+#include "FpsCounter.h"
 
 
 namespace android {

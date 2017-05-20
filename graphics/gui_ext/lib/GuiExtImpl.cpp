@@ -22,7 +22,7 @@
 #include <binder/IInterface.h>
 #include <binder/IPCThreadState.h>
 
-#include <hardware/gralloc_extra.h>
+#include "gralloc_extra.h"
 
 #ifdef TOUCH_ION_BUFFER
 #include <linux/ion_drv.h>

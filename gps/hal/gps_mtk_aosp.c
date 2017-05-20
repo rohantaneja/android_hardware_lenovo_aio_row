@@ -433,6 +433,9 @@ static int nw_type = 0;
 #define nw_wifi 0x00000001
 #define nw_data 0x00000000
 
+char chip_id[PROPERTY_VALUE_MAX];
+static int gps_mode = -1;
+
 #if EPO_SUPPORT
    // zqh: download EPO by request
 static GpsXtraCallbacks mGpsXtraCallbacks;
@@ -444,8 +447,7 @@ typedef struct
 EpoData epo_data;
 static int epo_download_failed = 0;
 static int epo_download_retry = 1;
-char chip_id[PROPERTY_VALUE_MAX];
-static int gps_mode = -1;
+
 
 #endif
 /*---------------------------------------------------------------------------*/
