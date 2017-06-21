@@ -1,3 +1,15 @@
+From 979f7fd62ff43c1e3f74629344b67fd8fc37379c Mon Sep 17 00:00:00 2001
+From: DeckerSU <support@decker.su>
+Date: Tue, 20 Dec 2016 05:38:32 +0200
+Subject: [PATCH] Use hw encoder only for camera [fire855]
+
+Change-Id: I5ec242db9dca36bd530a771321a991dbc5fb5e5b
+---
+ media/libmediaplayerservice/StagefrightRecorder.cpp |  8 ++++++++
+ media/libstagefright/MediaCodecList.cpp             | 11 +++++++++++
+ media/libstagefright/MediaCodecSource.cpp           |  6 ++++++
+ 3 files changed, 25 insertions(+)
+
 diff --git a/media/libmediaplayerservice/StagefrightRecorder.cpp b/media/libmediaplayerservice/StagefrightRecorder.cpp
 index d7bb876..d0fb562 100644
 --- a/media/libmediaplayerservice/StagefrightRecorder.cpp
@@ -56,4 +68,5 @@ index f66215f..9f2ade6 100755
      status_t err = NO_INIT;
      for (size_t ix = 0; ix < matchingCodecs.size(); ++ix) {
          mEncoder = MediaCodec::CreateByComponentName(
-
+-- 
+2.7.4

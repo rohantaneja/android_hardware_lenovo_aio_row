@@ -1,3 +1,17 @@
+From 7426ca178ff8f0fef503e354643a88b929f0b0f6 Mon Sep 17 00:00:00 2001
+From: DeckerSU <support@decker.su>
+Date: Mon, 20 Feb 2017 03:59:41 +0300
+Subject: [PATCH] wifi tethering fix
+
+- standart wlan0 -> ap0 change
+- Revert "Don't start tethering if IPv6 RPF is not supported." patch (thx to olegsvs)
+
+Change-Id: I3fb6a1db4c0ff6c3ecae95ec5c11ca485a465934
+---
+ server/NatController.cpp    | 4 +++-
+ server/SoftapController.cpp | 6 ++++--
+ 2 files changed, 7 insertions(+), 3 deletions(-)
+
 diff --git a/server/NatController.cpp b/server/NatController.cpp
 index cda8f5f..c966a11 100644
 --- a/server/NatController.cpp
@@ -37,3 +51,5 @@ index 1c59ec3..2e6d05c 100755
  
      std::string fbuf;
      if (argc > 7) {
+-- 
+2.7.4
