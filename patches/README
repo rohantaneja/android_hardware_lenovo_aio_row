@@ -1,5 +1,10 @@
-This is patch directory
+AIO_ROW Patch Directory
+==========
+These patches are only applicable on AOSP-N based ROM.
 
-cd WORKING_DIR
-sh hardware/lenovo/aio_row/patches/install.sh
-sh hardware/lenovo/aio_row/patches/uninstall.sh
+##### Installing the patches
+    $ sh hardware/lenovo/aio_row/patches/install.sh
+
+##### Uninstalling the patches
+    $ sh hardware/lenovo/aio_row/patches/uninstall.sh
+
