@@ -8,11 +8,11 @@ index cda8f5f..d8be096 100644
  
 -    if (runCmd(ARRAY_SIZE(cmd4), cmd4) && add) {
 +
-+#ifdef MTK_HARDWARE    
++#ifdef MTK_HARDWARE
 +    if (runCmd(ARRAY_SIZE(cmd4), cmd4) && add && false) {
 +#else
-+    if (runCmd(ARRAY_SIZE(cmd4), cmd4) && add) {      
-+#endif      
++    if (runCmd(ARRAY_SIZE(cmd4), cmd4) && add) {
++#endif
          rc = -1;
          goto err_rpfilter;
      }
