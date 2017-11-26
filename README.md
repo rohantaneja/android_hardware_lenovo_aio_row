@@ -1,6 +1,6 @@
 Lenovo A7000-a HALs Directory
 ==========
-This is the HALs directory compatible for Lenovo A7000-a (_aio_row_) only. Please refer to the [device tree](https://github.com/rohantaneja/android_device_lenovo_aio_row).
+This is the HALs directory compatible for Lenovo A7000-a (_aio_row_) only. Please refer to the [device tree](https://github.com/aryankedare/android_device_lenovo_aio_row).
 
 ## Patches:
 To make ROM compatible patches are need to be installed. Use following command to install the patches.
