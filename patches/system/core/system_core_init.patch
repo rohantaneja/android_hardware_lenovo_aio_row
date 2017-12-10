@@ -51,7 +51,7 @@ index 9992b4784..4255fc759 100755
      if (ALLOW_PERMISSIVE_SELINUX) {
 -        return selinux_status_from_cmdline() == SELINUX_ENFORCING;
 +       // return selinux_status_from_cmdline() == SELINUX_ENFORCING;
-+        return false;   
++        return false;
      }
      return true;
  }
