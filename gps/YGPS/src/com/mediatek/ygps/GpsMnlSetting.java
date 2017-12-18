@@ -38,13 +38,13 @@
 package com.mediatek.ygps;
 
 import android.os.SystemProperties;
-import android.util.Log;
 
+import android.util.Log;
 
 import java.util.ArrayList;
 
 /**
- * GPS MNL flag setting.
+ * GPS MNL flag setting
  *
  * @author mtk54046
  * @version 1.0
@@ -63,16 +63,15 @@ public class GpsMnlSetting {
     public static final String KEY_BEE_ENABLED = "BEE_enabled";
     public static final String KEY_TEST_MODE = "test.mode";
     public static final String KEY_SUPLLOG_ENABLED = "SUPPLOG_enabled";
-    public static final String KEY_GPS_EPO = "gps.epo";
 
     private static final String MNL_PROP_NAME = "persist.radio.mnl.prop";
     private static final String GPS_CHIP_PROP = "gps.gps.version";
 
-    private static final String DEFAULT_MNL_PROP = "00011001";
+    private static final String DEFAULT_MNL_PROP = "0001100";
     private static ArrayList<String> sKeyList = null;
     private static final String GPS_CLOCK_PROP = "gps.clock.type";
     /**
-     * Get gps chip version.
+     * Get gps chip version
      *
      * @param defaultValue
      *            Default value
@@ -87,7 +86,7 @@ public class GpsMnlSetting {
     }
 
     /**
-     * Get MNL system property.
+     * Get MNL system property
      *
      * @param key
      *            The key of the property
@@ -102,7 +101,7 @@ public class GpsMnlSetting {
             initList();
         }
         int index = sKeyList.indexOf(key);
-        Log.v("@M_" + TAG, "getMnlProp: " + prop);
+        Log.v(TAG, "getMnlProp: " + prop);
         if (null == prop || prop.isEmpty()
                 || -1 == index || index >= prop.length()) {
             result = defaultValue;
@@ -110,12 +109,12 @@ public class GpsMnlSetting {
             char c = prop.charAt(index);
             result = String.valueOf(c);
         }
-        Log.v("@M_" + TAG, "getMnlProp result: " + result);
+        Log.v(TAG, "getMnlProp result: " + result);
         return result;
     }
 
     /**
-     * Set MNL system property.
+     * Set MNL system property
      *
      * @param key
      *            The key of the property
@@ -123,7 +122,7 @@ public class GpsMnlSetting {
      *            The value of the property
      */
     public static void setMnlProp(String key, String value) {
-        Log.v("@M_" + TAG, "setMnlProp: " + key + " " + value);
+        Log.v(TAG, "setMnlProp: " + key + " " + value);
         String prop = SystemProperties.get(MNL_PROP_NAME);
         if (null == sKeyList) {
             initList();
@@ -138,16 +137,11 @@ public class GpsMnlSetting {
                 charArray[index] = value.charAt(0);
                 String newProp = String.valueOf(charArray);
                 SystemProperties.set(MNL_PROP_NAME, newProp);
-                Log.v("@M_" + TAG, "setMnlProp newProp: " + newProp);
+                Log.v(TAG, "setMnlProp newProp: " + newProp);
             }
         }
     }
 
-    /**
-     * Get GPS clock type value.
-     * @param defaultValue default value if the system property is not valid
-     * @return GPS clock type value
-     */
     public static String getClockProp(String defaultValue) {
         String clockType = SystemProperties.get(GPS_CLOCK_PROP);
         if (null == clockType || clockType.isEmpty()) {
@@ -165,6 +159,5 @@ public class GpsMnlSetting {
         sKeyList.add(KEY_BEE_ENABLED);
         sKeyList.add(KEY_TEST_MODE);
         sKeyList.add(KEY_SUPLLOG_ENABLED);
-        sKeyList.add(KEY_GPS_EPO);
     }
 }

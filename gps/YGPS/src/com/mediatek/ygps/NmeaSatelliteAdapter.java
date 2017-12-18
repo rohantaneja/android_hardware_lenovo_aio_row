@@ -2,25 +2,15 @@ package com.mediatek.ygps;
 
 import java.util.Iterator;
 
-/**
- * Adapter to hold a serial of satellites information.
- *
- */
-public class NmeaSatelliteAdapter implements Iterable<SatelliteInfo> {
+public class NmeaSatelliteAdapter implements SatelliteInfoAdapter {
 
     private Iterator<NmeaParser.SatelliteInfo> mNmeaIterator = null;
-
-    /**
-     * Constructor function.
-     * @param nmeaItr Iterable for satellites
-     */
     public NmeaSatelliteAdapter(Iterable<NmeaParser.SatelliteInfo> nmeaItr) {
         if (nmeaItr != null) {
             mNmeaIterator = nmeaItr.iterator();
         }
     }
 
-    @Override
     public Iterator<SatelliteInfo> iterator() {
 
         return new Iterator<SatelliteInfo>() {
@@ -54,12 +44,12 @@ public class NmeaSatelliteAdapter implements Iterable<SatelliteInfo> {
             return null;
         }
         SatelliteInfo satInfo = new SatelliteInfo();
-        satInfo.mPrn = nmeaSatel.mPrn;
-        satInfo.mSnr = nmeaSatel.mSnr;
-        satInfo.mElevation = nmeaSatel.mElevation;
-        satInfo.mAzimuth = nmeaSatel.mAzimuth;
-        satInfo.mUsedInFix = nmeaSatel.mUsedInFix;
-        satInfo.mColor = nmeaSatel.mColor;
+        satInfo.prn = nmeaSatel.mPrn;
+        satInfo.snr = nmeaSatel.mSnr;
+        satInfo.elevation = nmeaSatel.mElevation;
+        satInfo.azimuth = nmeaSatel.mAzimuth;
+        satInfo.usedInFix = nmeaSatel.mUsedInFix;
+        satInfo.color = nmeaSatel.mColor;
         return satInfo;
     }
 

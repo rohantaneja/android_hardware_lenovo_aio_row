@@ -47,10 +47,8 @@ import java.net.UnknownHostException;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
-
-
 /**
- * Client socket, used to connect with GPS server and communicate with PMTK.
+ * Client socket, used to connect with GPS server and communicate with PMTK
  * command
  *
  * @author mtk54046
@@ -73,18 +71,15 @@ public class ClientSocket {
     private YgpsActivity mCallBack = null;
     private Thread mSendThread = null;
     private byte[] mDataBuffer = null;
-    private static final String[][] CMD_RESPONSE = {
-        {"PMTK605", "$PMTK705"},
-        {"PMTK837", "PMTK001"},
-    };
+
     /**
-     * Constructor, initial parameters and start thread to send/receive.
+     * Constructor, initial parameters and start thread to send/receive
      *
      * @param callBack
      *            Callback when message received
      */
     public ClientSocket(YgpsActivity callBack) {
-        Log.v("@M_" + TAG, "ClientSocket constructor");
+        Log.v(TAG, "ClientSocket constructor");
         this.mCallBack = callBack;
         mCommandQueue = new LinkedBlockingQueue<String>();
         mDataBuffer = new byte[BUFFER_SIZE];
@@ -94,9 +89,9 @@ public class ClientSocket {
                 while (true) {
                     try {
                         mCommand = mCommandQueue.take();
-                        Log.v("@M_" + TAG, "Queue take command:" + mCommand);
+                        Log.v(TAG, "Queue take command:" + mCommand);
                     } catch (InterruptedException ie) {
-                        Log.w("@M_" + TAG,
+                        Log.w(TAG,
                                 "Take command interrupted:" + ie.getMessage());
                         return;
                     }
@@ -112,60 +107,30 @@ public class ClientSocket {
                             String result = null;
                             int line = 0;
                             int count = -1;
-                            String tarRes = "PMTK";
-                            boolean checkTimeOut = false;
-                            for (String[] pair: CMD_RESPONSE) {
-                                if (mCommand.contains(pair[0])) {
-                                    tarRes = pair[1];
-                                    break;
-                                }
-                            }
-                            if (mCommand.contains(CMD_RESPONSE[0][0])) {
-                                checkTimeOut = true;
-                            }
-                            long startTime = System.currentTimeMillis();
                             while ((count = mDataInput.read(mDataBuffer)) != -1) {
-
                                 line++;
                                 result = new String(mDataBuffer, 0, count);
-                                Log.v("@M_" + TAG, "line: " + line + " sentence: "
+                                Log.v(TAG, "line: " + line + " sentence: "
                                         + result);
-                                if (result.contains(tarRes)) {
-                                    int startIndex = result.indexOf(tarRes);
-                                    String strTemp = result.substring(startIndex);
-                                    Log.v("@M_" + TAG, "strTemp: " + strTemp);
-                                    int endIndex = strTemp.indexOf("*");
-                                    if (endIndex != -1) {
-                                        mResponse = strTemp.substring(0, endIndex);
-                                    } else {
-                                        mResponse = "ERROR";
-                                    }
-                                    Log.v("@M_" + TAG, "Get response from MNL: "
-                                            + mResponse);
+                                if (result.contains("PMTK")) {
+                                    mResponse = result;
+                                    Log.v(TAG, "Get response from MNL: "
+                                            + result);
                                     break;
                                 }
-
-                                if (checkTimeOut) {
-                                    long receiveTime = System.currentTimeMillis();
-                                    if ((receiveTime - startTime) > SOCKET_TIME_OUT_TIME) {
-                                        mResponse = "TIMEOUT";
-                                        break;
-                                    }
-                                } else {
-                                    if (line > LINE_OUT_SIZE) {
-                                        mResponse = "TIMEOUT";
-                                        break;
-                                    }
+                                if (line > LINE_OUT_SIZE) {
+                                    mResponse = "TIMEOUT";
+                                    break;
                                 }
                             }
                         } catch (IOException e) {
-                            Log.w("@M_" + TAG,
+                            Log.w(TAG,
                                     "sendCommand IOException: "
                                             + e.getMessage());
                             mResponse = "ERROR";
                         }
                     } else {
-                        Log.d("@M_" + TAG, "out is null");
+                        Log.d(TAG, "out is null");
                         mResponse = "ERROR";
                     }
                     if (null != ClientSocket.this.mCallBack) {
@@ -180,12 +145,12 @@ public class ClientSocket {
     }
 
     /**
-     * Start client socket and connect with server.
+     * Start client socket and connect with server
      */
     private void openClient() {
-        Log.v("@M_" + TAG, "enter startClient");
+        Log.v(TAG, "enter startClient");
         if (null != mClientSocket && mClientSocket.isConnected()) {
-            Log.d("@M_" + TAG, "localSocket has started, return");
+            Log.d(TAG, "localSocket has started, return");
             return;
         }
         try {
@@ -194,17 +159,17 @@ public class ClientSocket {
             mDataOutput = new DataOutputStream(mClientSocket.getOutputStream());
             mDataInput = new DataInputStream(mClientSocket.getInputStream());
         } catch (UnknownHostException e) {
-            Log.w("@M_" + TAG, e.getMessage());
+            Log.w(TAG, e.getMessage());
         } catch (IOException e) {
-            Log.w("@M_" + TAG, e.getMessage());
+            Log.w(TAG, e.getMessage());
         }
     }
 
     /**
-     * Stop client socket and disconnect with server.
+     * Stop client socket and disconnect with server
      */
     private void closeClient() {
-        Log.v("@M_" + TAG, "enter closeClient");
+        Log.v(TAG, "enter closeClient");
         try {
             if (null != mDataInput) {
                 mDataInput.close();
@@ -216,7 +181,7 @@ public class ClientSocket {
                 mClientSocket.close();
             }
         } catch (IOException e) {
-            Log.w("@M_" + TAG, "closeClient IOException: " + e.getMessage());
+            Log.w(TAG, "closeClient IOException: " + e.getMessage());
         } finally {
             mClientSocket = null;
             mDataInput = null;
@@ -225,43 +190,43 @@ public class ClientSocket {
     }
 
     /**
-     * Finalise communicate with socket server.
+     * Finalise communicate with socket server
      */
     public void endClient() {
-        Log.v("@M_" + TAG, "enter endClient");
+        Log.v(TAG, "enter endClient");
         mSendThread.interrupt();
-        Log.v("@M_" + TAG, "Queue remaining:" + mCommandQueue.size());
+        Log.v(TAG, "Queue remaining:" + mCommandQueue.size());
         closeClient();
         mCallBack = null;
     }
 
     /**
-     * Send command to socket server.
+     * Send command to socket server
      *
      * @param command
      *            Command need to send
      */
     public void sendCommand(String command) {
-        Log.v("@M_" + TAG, "enter sendCommand");
+        Log.v(TAG, "enter sendCommand");
         String sendComm = "$" + command + "*" + calcCS(command);
-        Log.v("@M_" + TAG, "Send command: " + sendComm);
+        Log.v(TAG, "Send command: " + sendComm);
         if (!mSendThread.isAlive()) {
-            Log.v("@M_" + TAG, "sendThread is not alive");
+            Log.v(TAG, "sendThread is not alive");
             mSendThread.start();
         }
         if (command.equals(sendComm) || mCommandQueue.contains(sendComm)) {
-            Log.v("@M_" + TAG, "send command return because of hasn't handle the same");
+            Log.v(TAG, "send command return because of hasn't handle the same");
             return;
         }
         try {
             mCommandQueue.put(sendComm);
         } catch (InterruptedException ie) {
-            Log.w("@M_" + TAG, "send command interrupted:" + ie.getMessage());
+            Log.w(TAG, "send command interrupted:" + ie.getMessage());
         }
     }
 
     /**
-     * Calculate check sum for PMTK command.
+     * Calculate check sum for PMTK command
      *
      * @param command
      *            The command need to send
